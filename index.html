@@ -1,5 +1,3 @@
-
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -7,10 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>21/02/2026</title>
     
-    <!-- Privacidad: Evitar indexación en Google -->
     <meta name="robots" content="noindex, nofollow">
     
-    <!-- Dependencias Externas -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -73,21 +69,12 @@
           animation: fadeIn 1.5s ease-out forwards;
         }
     </style>
-<script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@^19.2.4",
-    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
-    "react/": "https://esm.sh/react@^19.2.4/"
-  }
-}
-</script>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo, useRef } = React;
+        const { useState, useEffect, useMemo } = React;
 
         // --- CONSTANTES ---
         const MESSAGE = `Hay momentos que quedan grabados, como esa foto que nos faltó en la recepción pero que reemplazamos con mil charlas más. 💭
@@ -102,8 +89,6 @@ Te quiero!`;
             TRANSITIONING: 'TRANSITIONING',
             UNLOCKED: 'UNLOCKED'
         };
-
-        // --- COMPONENTES ---
 
         const BackgroundParticles = () => {
             const icons = ['🌸', '✨', '🎀', '⭐', '🌷'];
@@ -183,7 +168,7 @@ Te quiero!`;
             const [isFinished, setIsFinished] = useState(false);
 
             useEffect(() => {
-                const totalDuration = 120000; // 120 segundos exactos
+                const totalDuration = 120000; 
                 const characters = Array.from(MESSAGE);
                 const intervalTime = totalDuration / characters.length;
                 let currentIndex = 0;
@@ -254,10 +239,8 @@ Te quiero!`;
             );
         };
 
-        // --- RENDER ---
         const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
 </html>
-
