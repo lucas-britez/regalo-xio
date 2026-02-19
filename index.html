@@ -1,0 +1,263 @@
+
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>21/02/2026</title>
+    
+    <!-- Privacidad: Evitar indexación en Google -->
+    <meta name="robots" content="noindex, nofollow">
+    
+    <!-- Dependencias Externas -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Architects+Daughter&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #FFFDD0;
+        }
+        .font-architects {
+            font-family: 'Architects Daughter', cursive;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); opacity: 0; }
+            20% { opacity: 0.6; }
+            80% { opacity: 0.6; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+        .particle {
+            position: absolute;
+            bottom: -50px;
+            pointer-events: none;
+            animation: float linear infinite;
+        }
+        @keyframes pulse-heart {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        .heart-pulse {
+            display: inline-block;
+            animation: pulse-heart 1.2s ease-in-out infinite;
+        }
+        .typewriter-cursor::after {
+            content: '|';
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        .glass-morphism {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(153, 102, 204, 0.3);
+            box-shadow: 0 8px 32px 0 rgba(153, 102, 204, 0.2);
+        }
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(10px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-fade-in {
+          animation: fadeIn 1.5s ease-out forwards;
+        }
+    </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect, useMemo, useRef } = React;
+
+        // --- CONSTANTES ---
+        const MESSAGE = `Hay momentos que quedan grabados, como esa foto que nos faltó en la recepción pero que reemplazamos con mil charlas más. 💭
+Hoy empezás una etapa nueva y, aunque cambien los salones, hay cosas que se mantienen constantes como las ganas de verte cumplir cada meta que te propongas... ha! y las cuotas de Spotify, claro... 🎶🎶
+Sé que la UTN te va a poner a prueba, pero acordate de lo que te dijo tu mamá en el audio que todos escuchamos finalizando la secundaria: "Aprendiste a leer sola". Sé que sos completamente capaz de llegar más lejos que nadie; ahora solo falta que vos estés tan segura de eso como lo estoy yo. 🙂‍↕️
+Gracias por dejarme ser parte de tu mundo estos años. Disfrutá tu día, Xio. Te merecés todo lo bueno que te pase... 🫶🏻
+Feliz cumpleaños. ✨️🎂🥂
+Te quiero!`;
+
+        const AppState = {
+            LOCKED: 'LOCKED',
+            TRANSITIONING: 'TRANSITIONING',
+            UNLOCKED: 'UNLOCKED'
+        };
+
+        // --- COMPONENTES ---
+
+        const BackgroundParticles = () => {
+            const icons = ['🌸', '✨', '🎀', '⭐', '🌷'];
+            const particles = useMemo(() => {
+                return Array.from({ length: 30 }).map((_, i) => ({
+                    id: i,
+                    left: `${Math.random() * 100}%`,
+                    duration: `${10 + Math.random() * 20}s`,
+                    size: `${15 + Math.random() * 20}px`,
+                    icon: icons[Math.floor(Math.random() * icons.length)],
+                    delay: `${Math.random() * 10}s`
+                }));
+            }, []);
+
+            return (
+                <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
+                    {particles.map((p) => (
+                        <div
+                            key={p.id}
+                            className="particle"
+                            style={{
+                                left: p.left,
+                                animationDuration: p.duration,
+                                animationDelay: p.delay,
+                                fontSize: p.size,
+                                color: '#FFD700'
+                            }}
+                        >
+                            {p.icon}
+                        </div>
+                    ))}
+                </div>
+            );
+        };
+
+        const LockScreen = ({ onUnlock }) => {
+            const [input, setInput] = useState('');
+            const CORRECT_CODE = "01011000 01101001 01101111";
+
+            const handleChange = (e) => {
+                const val = e.target.value;
+                setInput(val);
+                if (val.replace(/\s/g, '') === CORRECT_CODE.replace(/\s/g, '')) {
+                    onUnlock();
+                }
+            };
+
+            return (
+                <div className="min-h-screen w-full flex flex-col items-center justify-center bg-white p-6 z-50">
+                    <div className="max-w-md w-full text-center space-y-8">
+                        <div className="space-y-2">
+                            <h1 className="text-3xl font-light text-gray-400 tracking-widest uppercase mb-12">
+                                Ingreso de Seguridad
+                            </h1>
+                            <p className="text-sm text-gray-400 italic">"Tres bloques de ocho para abrir el portal..."</p>
+                        </div>
+                        <div className="relative group">
+                            <input
+                                type="text"
+                                value={input}
+                                onChange={handleChange}
+                                placeholder="00000000 00000000 00000000"
+                                className="w-full bg-transparent border-b-2 border-gray-200 focus:border-[#9966CC] py-4 px-2 text-center text-xl font-mono tracking-widest outline-none transition-all duration-500"
+                                autoFocus
+                            />
+                            <div className="mt-4 text-xs text-gray-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                                X-I-O
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            );
+        };
+
+        const TypewriterMessage = () => {
+            const [displayedText, setDisplayedText] = useState('');
+            const [isFinished, setIsFinished] = useState(false);
+
+            useEffect(() => {
+                const totalDuration = 120000; // 120 segundos exactos
+                const characters = Array.from(MESSAGE);
+                const intervalTime = totalDuration / characters.length;
+                let currentIndex = 0;
+
+                const timer = setInterval(() => {
+                    if (currentIndex < characters.length) {
+                        setDisplayedText((prev) => prev + characters[currentIndex]);
+                        currentIndex++;
+                        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+                    } else {
+                        clearInterval(timer);
+                        setIsFinished(true);
+                    }
+                }, intervalTime);
+
+                return () => clearInterval(timer);
+            }, []);
+
+            return (
+                <div className="relative z-10 w-full max-w-2xl px-6 py-12 md:py-24">
+                    <div className="glass-morphism rounded-3xl p-8 md:p-12 border-2 border-[#9966CC]/30">
+                        <p className="font-architects text-xl md:text-2xl leading-relaxed text-gray-800 whitespace-pre-wrap">
+                            {displayedText}
+                            {isFinished ? (
+                                <span className="heart-pulse text-[#FF00FF] ml-1">🩷</span>
+                            ) : (
+                                <span className="typewriter-cursor"></span>
+                            )}
+                        </p>
+                    </div>
+                </div>
+            );
+        };
+
+        const App = () => {
+            const [state, setState] = useState(AppState.LOCKED);
+
+            const handleUnlock = () => {
+                setState(AppState.TRANSITIONING);
+                setTimeout(() => setState(AppState.UNLOCKED), 1000);
+            };
+
+            if (state === AppState.LOCKED || state === AppState.TRANSITIONING) {
+                return (
+                    <div className={`transition-opacity duration-1000 ${state === AppState.TRANSITIONING ? 'opacity-0' : 'opacity-100'}`}>
+                        <LockScreen onUnlock={handleUnlock} />
+                    </div>
+                );
+            }
+
+            return (
+                <div className="min-h-screen w-full relative overflow-x-hidden flex flex-col items-center animate-fade-in"
+                     style={{ background: 'linear-gradient(135deg, #87CEEB 0%, #FFFDD0 100%)' }}>
+                    <div className="fixed top-0 left-0 w-full h-1 bg-[#9966CC]/10 z-20"></div>
+                    <BackgroundParticles />
+                    <div className="mt-12 mb-2 z-10">
+                        <span className="text-gray-600 text-lg md:text-xl tracking-[0.25em] font-light">
+                            21/02/2026
+                        </span>
+                    </div>
+                    <TypewriterMessage />
+                    <img 
+                        src="https://i.ibb.co/VFRP9gS/20260219-085855-1.jpg" 
+                        alt="Sello" 
+                        className="fixed bottom-4 right-4 h-[40px] w-auto opacity-30 grayscale hover:opacity-60 transition-opacity duration-700 rounded-sm pointer-events-none select-none z-50"
+                    />
+                </div>
+            );
+        };
+
+        // --- RENDER ---
+        const root = ReactDOM.createRoot(document.getElementById('root'));
+        root.render(<App />);
+    </script>
+</body>
+</html>
+
