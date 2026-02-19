@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -5,8 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>21/02/2026</title>
     
+    <!-- Privacidad: Evitar que Google indexe este sitio -->
     <meta name="robots" content="noindex, nofollow">
     
+    <!-- Dependencias -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
@@ -69,14 +73,22 @@
           animation: fadeIn 1.5s ease-out forwards;
         }
     </style>
+<script type="importmap">
+{
+  "imports": {
+    "react": "https://esm.sh/react@^19.2.4",
+    "react-dom/": "https://esm.sh/react-dom@^19.2.4/",
+    "react/": "https://esm.sh/react@^19.2.4/"
+  }
+}
+</script>
 </head>
 <body>
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect, useMemo } = React;
+        const { useState, useEffect, useMemo, useRef } = React;
 
-        // --- CONSTANTES ---
         const MESSAGE = `Hay momentos que quedan grabados, como esa foto que nos faltó en la recepción pero que reemplazamos con mil charlas más. 💭
 Hoy empezás una etapa nueva y, aunque cambien los salones, hay cosas que se mantienen constantes como las ganas de verte cumplir cada meta que te propongas... ha! y las cuotas de Spotify, claro... 🎶🎶
 Sé que la UTN te va a poner a prueba, pero acordate de lo que te dijo tu mamá en el audio que todos escuchamos finalizando la secundaria: "Aprendiste a leer sola". Sé que sos completamente capaz de llegar más lejos que nadie; ahora solo falta que vos estés tan segura de eso como lo estoy yo. 🙂‍↕️
@@ -113,8 +125,7 @@ Te quiero!`;
                                 left: p.left,
                                 animationDuration: p.duration,
                                 animationDelay: p.delay,
-                                fontSize: p.size,
-                                color: '#FFD700'
+                                fontSize: p.size
                             }}
                         >
                             {p.icon}
@@ -168,14 +179,17 @@ Te quiero!`;
             const [isFinished, setIsFinished] = useState(false);
 
             useEffect(() => {
-                const totalDuration = 120000; 
+                const totalDuration = 120000; // 2 minutos
                 const characters = Array.from(MESSAGE);
                 const intervalTime = totalDuration / characters.length;
                 let currentIndex = 0;
 
                 const timer = setInterval(() => {
                     if (currentIndex < characters.length) {
-                        setDisplayedText((prev) => prev + characters[currentIndex]);
+                        const nextChar = characters[currentIndex];
+                        if (nextChar !== undefined) {
+                            setDisplayedText((prev) => prev + nextChar);
+                        }
                         currentIndex++;
                         window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
                     } else {
@@ -230,10 +244,12 @@ Te quiero!`;
                         </span>
                     </div>
                     <TypewriterMessage />
+                    
+                    {/* Sello de Autor: A color, sutil y fijo */}
                     <img 
                         src="https://i.ibb.co/VFRP9gS/20260219-085855-1.jpg" 
-                        alt="Sello" 
-                        className="fixed bottom-4 right-4 h-[40px] w-auto opacity-30 grayscale hover:opacity-60 transition-opacity duration-700 rounded-sm pointer-events-none select-none z-50"
+                        alt="Sello de Autor" 
+                        className="fixed bottom-4 right-4 h-[40px] w-auto opacity-40 transition-opacity duration-700 rounded-sm pointer-events-none select-none z-50"
                     />
                 </div>
             );
@@ -244,3 +260,4 @@ Te quiero!`;
     </script>
 </body>
 </html>
+
